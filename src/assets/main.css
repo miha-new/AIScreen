@@ -1,1 +1,330 @@
 @import 'tailwindcss';
+
+@layer base {
+  ::selection {
+    @apply bg-indigo-500 text-white;
+  }
+  body {
+    @apply h-screen overflow-y-auto overflow-x-hidden bg-gray-50 text-gray-800;
+  }
+  #app {
+    @apply h-screen;
+  }
+}
+
+@layer components {
+  .h1 {
+    @apply text-2xl font-bold text-gray-800;
+  }
+  .card {
+    @apply bg-white rounded-2xl shadow-2xl;
+  }
+  .label {
+    @apply block text-sm/4 font-medium text-gray-500 select-none cursor-default;
+  }
+  .input {
+    @apply w-full min-h-9 py-1 text-base bg-white text-gray-800 border-b-[2px] border-gray-300 transition duration-200 ease-in-out focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .input:-webkit-autofill {
+    @apply bg-white text-gray-800;
+    -webkit-box-shadow: 0 0 0 1000px theme('colors.white') inset !important;
+    -webkit-text-fill-color: theme('colors.gray.800') !important;
+  }
+  .switch {
+    @apply relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .switch-marker {
+    @apply pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out;
+  }
+  .btn {
+    @apply flex w-full justify-center py-2.5 px-4 border-0 rounded-full text-sm font-medium select-none cursor-pointer transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-primary {
+    @apply bg-indigo-600 text-white hover:bg-indigo-500 focus:ring-indigo-500;
+  }
+  .loader {
+    --w: 10ch;
+    @apply overflow-hidden whitespace-nowrap w-[var(--w)];
+    letter-spacing: calc(10 * var(--w));
+    animation: l18 3s infinite;
+  }
+  .loader::before {
+    @apply content-['Loading...'] text-transparent;
+  }
+  @keyframes l18 {
+    0% {
+      text-shadow:
+        calc(9 * var(--w)) 0 currentColor,
+        calc(-1 * var(--w)) 0 currentColor,
+        calc(-11 * var(--w)) 0 currentColor,
+        calc(-21 * var(--w)) 0 currentColor,
+        calc(-31 * var(--w)) 0 currentColor,
+        calc(-41 * var(--w)) 0 currentColor,
+        calc(-51 * var(--w)) 0 currentColor,
+        calc(-61 * var(--w)) 0 currentColor,
+        calc(-71 * var(--w)) 0 currentColor,
+        calc(-81 * var(--w)) 0 currentColor;
+    }
+    4% {
+      text-shadow:
+        calc(0 * var(--w)) 0 currentColor,
+        calc(-1 * var(--w)) 0 currentColor,
+        calc(-11 * var(--w)) 0 currentColor,
+        calc(-21 * var(--w)) 0 currentColor,
+        calc(-31 * var(--w)) 0 currentColor,
+        calc(-41 * var(--w)) 0 currentColor,
+        calc(-51 * var(--w)) 0 currentColor,
+        calc(-61 * var(--w)) 0 currentColor,
+        calc(-71 * var(--w)) 0 currentColor,
+        calc(-81 * var(--w)) 0 currentColor;
+    }
+    8% {
+      text-shadow:
+        calc(0 * var(--w)) 0 currentColor,
+        calc(-10 * var(--w)) 0 currentColor,
+        calc(-11 * var(--w)) 0 currentColor,
+        calc(-21 * var(--w)) 0 currentColor,
+        calc(-31 * var(--w)) 0 currentColor,
+        calc(-41 * var(--w)) 0 currentColor,
+        calc(-51 * var(--w)) 0 currentColor,
+        calc(-61 * var(--w)) 0 currentColor,
+        calc(-71 * var(--w)) 0 currentColor,
+        calc(-81 * var(--w)) 0 currentColor;
+    }
+    12% {
+      text-shadow:
+        calc(0 * var(--w)) 0 currentColor,
+        calc(-10 * var(--w)) 0 currentColor,
+        calc(-20 * var(--w)) 0 currentColor,
+        calc(-21 * var(--w)) 0 currentColor,
+        calc(-31 * var(--w)) 0 currentColor,
+        calc(-41 * var(--w)) 0 currentColor,
+        calc(-51 * var(--w)) 0 currentColor,
+        calc(-61 * var(--w)) 0 currentColor,
+        calc(-71 * var(--w)) 0 currentColor,
+        calc(-81 * var(--w)) 0 currentColor;
+    }
+    16% {
+      text-shadow:
+        calc(0 * var(--w)) 0 currentColor,
+        calc(-10 * var(--w)) 0 currentColor,
+        calc(-20 * var(--w)) 0 currentColor,
+        calc(-30 * var(--w)) 0 currentColor,
+        calc(-31 * var(--w)) 0 currentColor,
+        calc(-41 * var(--w)) 0 currentColor,
+        calc(-51 * var(--w)) 0 currentColor,
+        calc(-61 * var(--w)) 0 currentColor,
+        calc(-71 * var(--w)) 0 currentColor,
+        calc(-81 * var(--w)) 0 currentColor;
+    }
+    20% {
+      text-shadow:
+        calc(0 * var(--w)) 0 currentColor,
+        calc(-10 * var(--w)) 0 currentColor,
+        calc(-20 * var(--w)) 0 currentColor,
+        calc(-30 * var(--w)) 0 currentColor,
+        calc(-40 * var(--w)) 0 currentColor,
+        calc(-41 * var(--w)) 0 currentColor,
+        calc(-51 * var(--w)) 0 currentColor,
+        calc(-61 * var(--w)) 0 currentColor,
+        calc(-71 * var(--w)) 0 currentColor,
+        calc(-81 * var(--w)) 0 currentColor;
+    }
+    24% {
+      text-shadow:
+        calc(0 * var(--w)) 0 currentColor,
+        calc(-10 * var(--w)) 0 currentColor,
+        calc(-20 * var(--w)) 0 currentColor,
+        calc(-30 * var(--w)) 0 currentColor,
+        calc(-40 * var(--w)) 0 currentColor,
+        calc(-50 * var(--w)) 0 currentColor,
+        calc(-51 * var(--w)) 0 currentColor,
+        calc(-61 * var(--w)) 0 currentColor,
+        calc(-71 * var(--w)) 0 currentColor,
+        calc(-81 * var(--w)) 0 currentColor;
+    }
+    28% {
+      text-shadow:
+        calc(0 * var(--w)) 0 currentColor,
+        calc(-10 * var(--w)) 0 currentColor,
+        calc(-20 * var(--w)) 0 currentColor,
+        calc(-30 * var(--w)) 0 currentColor,
+        calc(-40 * var(--w)) 0 currentColor,
+        calc(-50 * var(--w)) 0 currentColor,
+        calc(-60 * var(--w)) 0 currentColor,
+        calc(-61 * var(--w)) 0 currentColor,
+        calc(-71 * var(--w)) 0 currentColor,
+        calc(-81 * var(--w)) 0 currentColor;
+    }
+    32% {
+      text-shadow:
+        calc(0 * var(--w)) 0 currentColor,
+        calc(-10 * var(--w)) 0 currentColor,
+        calc(-20 * var(--w)) 0 currentColor,
+        calc(-30 * var(--w)) 0 currentColor,
+        calc(-40 * var(--w)) 0 currentColor,
+        calc(-50 * var(--w)) 0 currentColor,
+        calc(-60 * var(--w)) 0 currentColor,
+        calc(-70 * var(--w)) 0 currentColor,
+        calc(-71 * var(--w)) 0 currentColor,
+        calc(-81 * var(--w)) 0 currentColor;
+    }
+    36% {
+      text-shadow:
+        calc(0 * var(--w)) 0 currentColor,
+        calc(-10 * var(--w)) 0 currentColor,
+        calc(-20 * var(--w)) 0 currentColor,
+        calc(-30 * var(--w)) 0 currentColor,
+        calc(-40 * var(--w)) 0 currentColor,
+        calc(-50 * var(--w)) 0 currentColor,
+        calc(-60 * var(--w)) 0 currentColor,
+        calc(-70 * var(--w)) 0 currentColor,
+        calc(-80 * var(--w)) 0 currentColor,
+        calc(-81 * var(--w)) 0 currentColor;
+    }
+    40%,
+    60% {
+      text-shadow:
+        calc(0 * var(--w)) 0 currentColor,
+        calc(-10 * var(--w)) 0 currentColor,
+        calc(-20 * var(--w)) 0 currentColor,
+        calc(-30 * var(--w)) 0 currentColor,
+        calc(-40 * var(--w)) 0 currentColor,
+        calc(-50 * var(--w)) 0 currentColor,
+        calc(-60 * var(--w)) 0 currentColor,
+        calc(-70 * var(--w)) 0 currentColor,
+        calc(-80 * var(--w)) 0 currentColor,
+        calc(-90 * var(--w)) 0 currentColor;
+    }
+    64% {
+      text-shadow:
+        calc(-9 * var(--w)) 0 currentColor,
+        calc(-10 * var(--w)) 0 currentColor,
+        calc(-20 * var(--w)) 0 currentColor,
+        calc(-30 * var(--w)) 0 currentColor,
+        calc(-40 * var(--w)) 0 currentColor,
+        calc(-50 * var(--w)) 0 currentColor,
+        calc(-60 * var(--w)) 0 currentColor,
+        calc(-70 * var(--w)) 0 currentColor,
+        calc(-80 * var(--w)) 0 currentColor,
+        calc(-90 * var(--w)) 0 currentColor;
+    }
+    68% {
+      text-shadow:
+        calc(-9 * var(--w)) 0 currentColor,
+        calc(-19 * var(--w)) 0 currentColor,
+        calc(-20 * var(--w)) 0 currentColor,
+        calc(-30 * var(--w)) 0 currentColor,
+        calc(-40 * var(--w)) 0 currentColor,
+        calc(-50 * var(--w)) 0 currentColor,
+        calc(-60 * var(--w)) 0 currentColor,
+        calc(-70 * var(--w)) 0 currentColor,
+        calc(-80 * var(--w)) 0 currentColor,
+        calc(-90 * var(--w)) 0 currentColor;
+    }
+    72% {
+      text-shadow:
+        calc(-9 * var(--w)) 0 currentColor,
+        calc(-19 * var(--w)) 0 currentColor,
+        calc(-29 * var(--w)) 0 currentColor,
+        calc(-30 * var(--w)) 0 currentColor,
+        calc(-40 * var(--w)) 0 currentColor,
+        calc(-50 * var(--w)) 0 currentColor,
+        calc(-60 * var(--w)) 0 currentColor,
+        calc(-70 * var(--w)) 0 currentColor,
+        calc(-80 * var(--w)) 0 currentColor,
+        calc(-90 * var(--w)) 0 currentColor;
+    }
+    76% {
+      text-shadow:
+        calc(-9 * var(--w)) 0 currentColor,
+        calc(-19 * var(--w)) 0 currentColor,
+        calc(-29 * var(--w)) 0 currentColor,
+        calc(-39 * var(--w)) 0 currentColor,
+        calc(-40 * var(--w)) 0 currentColor,
+        calc(-50 * var(--w)) 0 currentColor,
+        calc(-60 * var(--w)) 0 currentColor,
+        calc(-70 * var(--w)) 0 currentColor,
+        calc(-80 * var(--w)) 0 currentColor,
+        calc(-90 * var(--w)) 0 currentColor;
+    }
+    80% {
+      text-shadow:
+        calc(-9 * var(--w)) 0 currentColor,
+        calc(-19 * var(--w)) 0 currentColor,
+        calc(-29 * var(--w)) 0 currentColor,
+        calc(-39 * var(--w)) 0 currentColor,
+        calc(-49 * var(--w)) 0 currentColor,
+        calc(-50 * var(--w)) 0 currentColor,
+        calc(-60 * var(--w)) 0 currentColor,
+        calc(-70 * var(--w)) 0 currentColor,
+        calc(-80 * var(--w)) 0 currentColor,
+        calc(-90 * var(--w)) 0 currentColor;
+    }
+    84% {
+      text-shadow:
+        calc(-9 * var(--w)) 0 currentColor,
+        calc(-19 * var(--w)) 0 currentColor,
+        calc(-29 * var(--w)) 0 currentColor,
+        calc(-39 * var(--w)) 0 currentColor,
+        calc(-49 * var(--w)) 0 currentColor,
+        calc(-59 * var(--w)) 0 currentColor,
+        calc(-60 * var(--w)) 0 currentColor,
+        calc(-70 * var(--w)) 0 currentColor,
+        calc(-80 * var(--w)) 0 currentColor,
+        calc(-90 * var(--w)) 0 currentColor;
+    }
+    88% {
+      text-shadow:
+        calc(-9 * var(--w)) 0 currentColor,
+        calc(-19 * var(--w)) 0 currentColor,
+        calc(-29 * var(--w)) 0 currentColor,
+        calc(-39 * var(--w)) 0 currentColor,
+        calc(-49 * var(--w)) 0 currentColor,
+        calc(-59 * var(--w)) 0 currentColor,
+        calc(-69 * var(--w)) 0 currentColor,
+        calc(-70 * var(--w)) 0 currentColor,
+        calc(-80 * var(--w)) 0 currentColor,
+        calc(-90 * var(--w)) 0 currentColor;
+    }
+    92% {
+      text-shadow:
+        calc(-9 * var(--w)) 0 currentColor,
+        calc(-19 * var(--w)) 0 currentColor,
+        calc(-29 * var(--w)) 0 currentColor,
+        calc(-39 * var(--w)) 0 currentColor,
+        calc(-49 * var(--w)) 0 currentColor,
+        calc(-59 * var(--w)) 0 currentColor,
+        calc(-69 * var(--w)) 0 currentColor,
+        calc(-79 * var(--w)) 0 currentColor,
+        calc(-80 * var(--w)) 0 currentColor,
+        calc(-90 * var(--w)) 0 currentColor;
+    }
+    96% {
+      text-shadow:
+        calc(-9 * var(--w)) 0 currentColor,
+        calc(-19 * var(--w)) 0 currentColor,
+        calc(-29 * var(--w)) 0 currentColor,
+        calc(-39 * var(--w)) 0 currentColor,
+        calc(-49 * var(--w)) 0 currentColor,
+        calc(-59 * var(--w)) 0 currentColor,
+        calc(-69 * var(--w)) 0 currentColor,
+        calc(-79 * var(--w)) 0 currentColor,
+        calc(-89 * var(--w)) 0 currentColor,
+        calc(-90 * var(--w)) 0 currentColor;
+    }
+    100% {
+      text-shadow:
+        calc(-9 * var(--w)) 0 currentColor,
+        calc(-19 * var(--w)) 0 currentColor,
+        calc(-29 * var(--w)) 0 currentColor,
+        calc(-39 * var(--w)) 0 currentColor,
+        calc(-49 * var(--w)) 0 currentColor,
+        calc(-59 * var(--w)) 0 currentColor,
+        calc(-69 * var(--w)) 0 currentColor,
+        calc(-79 * var(--w)) 0 currentColor,
+        calc(-89 * var(--w)) 0 currentColor,
+        calc(-99 * var(--w)) 0 currentColor;
+    }
+  }
+}

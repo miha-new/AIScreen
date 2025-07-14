@@ -23,7 +23,6 @@ export function useApi() {
     loading,
     error,
 
-    // Auth
     login: (data: LoginData) => execute(() => apiService.login(data)),
   }
 }
