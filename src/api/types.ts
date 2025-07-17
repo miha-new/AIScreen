@@ -45,3 +45,12 @@ export interface Template {
   updated_at: string
   updated_by: string
 }
+
+export interface CreateTemplateParams {
+  name: string
+  objects: null
+  tags?: string[] | null
+  width?: string
+  height?: string
+  preview_image?: string
+}

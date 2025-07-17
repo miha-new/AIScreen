@@ -55,7 +55,7 @@ onMounted(() => {
         <dd class="text-lg/4.5 font-bold">{{ templateDetail.height }}</dd>
       </dl>
     </div>
-    <div class="card overflow-hidden">
+    <div v-if="templateDetail.preview_image" class="card overflow-hidden">
       <img class="w-full h-auto object-cover" :src="templateDetail.preview_image" alt="" />
     </div>
   </template>

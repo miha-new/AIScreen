@@ -3,6 +3,8 @@ import { ref, computed, onMounted } from 'vue'
 import { useApi } from '@/composables/useApi'
 import type { TemplatesTag, Template, TemplatesParams } from '@/api/types'
 import BaseButton from '@/components/BaseButton.vue'
+import BaseSidebar from '@/components/BaseSidebar.vue'
+import FormTemplate from '@/components/FormTemplate.vue'
 import BaseSearch from '@/components/BaseSearch.vue'
 import BaseTag from '@/components/BaseTag.vue'
 import CardTemplate from '@/components/CardTemplate.vue'
@@ -12,6 +14,7 @@ const templateTagsList = ref<TemplatesTag[]>([])
 const { loading: isTemplatesLoading, error: templatesError, templates } = useApi()
 const { error: templatesTagsError, templatesTags } = useApi()
 
+const isPanelOpen = ref(false)
 const search = ref('')
 const activeTemplatesTags = ref<TemplatesTag[]>([])
 const templatesParams = computed<TemplatesParams>(() => {
@@ -70,7 +73,7 @@ onMounted(() => {
       <h2 class="h1">Templates</h2>
     </div>
     <div class="flex-shrink-0">
-      <BaseButton class="btn-primary">Create template</BaseButton>
+      <BaseButton class="btn-primary" @click="isPanelOpen = true">Create template</BaseButton>
     </div>
   </div>
   <div class="mb-4">
@@ -107,4 +110,8 @@ onMounted(() => {
     </div>
     <div v-else class="text-lg font-bold text-center py-10">No Templates Available</div>
   </template>
+
+  <BaseSidebar :isOpen="isPanelOpen" title="Create Template" @close="isPanelOpen = false">
+    <FormTemplate />
+  </BaseSidebar>
 </template>

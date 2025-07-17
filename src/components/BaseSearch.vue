@@ -38,7 +38,6 @@ watch(
 </script>
 
 <template>
-  <!-- Поле ввода -->
   <input
     :value="modelValue"
     @input="handleInput"

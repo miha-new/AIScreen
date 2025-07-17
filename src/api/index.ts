@@ -11,6 +11,7 @@ import type {
   TemplatesParams,
   TemplateParams,
   Template,
+  CreateTemplateParams,
 } from './types'
 
 class ApiService {
@@ -55,8 +56,8 @@ class ApiService {
     return Promise.reject(error.response?.data || error)
   }
 
-  public async login(data: LoginParams): Promise<AuthResponse> {
-    return this.publicApi.post('/login', data)
+  public async login(params: LoginParams): Promise<AuthResponse> {
+    return this.publicApi.post('/login', params)
   }
 
   public async templates(params?: TemplatesParams): Promise<Template[]> {
@@ -67,6 +68,9 @@ class ApiService {
   }
   public async templatesTags(): Promise<TemplatesTag[]> {
     return this.authApi.get('/canvas_templates/tags/list')
+  }
+  public async createTemplate(params: CreateTemplateParams): Promise<Template> {
+    return this.authApi.post('/canvas_template', params)
   }
 }
 
