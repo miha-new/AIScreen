@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { apiService } from '@/api'
 import type { AxiosError } from 'axios'
-import type { LoginData } from '@/api/types'
+import type { LoginParams, TemplateParams, TemplatesParams } from '@/api/types'
 
 export function useApi() {
   const loading = ref(false)
@@ -23,6 +23,10 @@ export function useApi() {
     loading,
     error,
 
-    login: (data: LoginData) => execute(() => apiService.login(data)),
+    login: (data: LoginParams) => execute(() => apiService.login(data)),
+
+    templates: (params?: TemplatesParams) => execute(() => apiService.templates(params)),
+    template: (params: TemplateParams) => execute(() => apiService.template(params)),
+    templatesTags: () => execute(() => apiService.templatesTags()),
   }
 }

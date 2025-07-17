@@ -1,0 +1,276 @@
+@keyframes loading {
+  0% {
+    text-shadow:
+      calc(9 * var(--w)) 0 currentColor,
+      calc(-1 * var(--w)) 0 currentColor,
+      calc(-11 * var(--w)) 0 currentColor,
+      calc(-21 * var(--w)) 0 currentColor,
+      calc(-31 * var(--w)) 0 currentColor,
+      calc(-41 * var(--w)) 0 currentColor,
+      calc(-51 * var(--w)) 0 currentColor,
+      calc(-61 * var(--w)) 0 currentColor,
+      calc(-71 * var(--w)) 0 currentColor,
+      calc(-81 * var(--w)) 0 currentColor;
+  }
+  4% {
+    text-shadow:
+      calc(0 * var(--w)) 0 currentColor,
+      calc(-1 * var(--w)) 0 currentColor,
+      calc(-11 * var(--w)) 0 currentColor,
+      calc(-21 * var(--w)) 0 currentColor,
+      calc(-31 * var(--w)) 0 currentColor,
+      calc(-41 * var(--w)) 0 currentColor,
+      calc(-51 * var(--w)) 0 currentColor,
+      calc(-61 * var(--w)) 0 currentColor,
+      calc(-71 * var(--w)) 0 currentColor,
+      calc(-81 * var(--w)) 0 currentColor;
+  }
+  8% {
+    text-shadow:
+      calc(0 * var(--w)) 0 currentColor,
+      calc(-10 * var(--w)) 0 currentColor,
+      calc(-11 * var(--w)) 0 currentColor,
+      calc(-21 * var(--w)) 0 currentColor,
+      calc(-31 * var(--w)) 0 currentColor,
+      calc(-41 * var(--w)) 0 currentColor,
+      calc(-51 * var(--w)) 0 currentColor,
+      calc(-61 * var(--w)) 0 currentColor,
+      calc(-71 * var(--w)) 0 currentColor,
+      calc(-81 * var(--w)) 0 currentColor;
+  }
+  12% {
+    text-shadow:
+      calc(0 * var(--w)) 0 currentColor,
+      calc(-10 * var(--w)) 0 currentColor,
+      calc(-20 * var(--w)) 0 currentColor,
+      calc(-21 * var(--w)) 0 currentColor,
+      calc(-31 * var(--w)) 0 currentColor,
+      calc(-41 * var(--w)) 0 currentColor,
+      calc(-51 * var(--w)) 0 currentColor,
+      calc(-61 * var(--w)) 0 currentColor,
+      calc(-71 * var(--w)) 0 currentColor,
+      calc(-81 * var(--w)) 0 currentColor;
+  }
+  16% {
+    text-shadow:
+      calc(0 * var(--w)) 0 currentColor,
+      calc(-10 * var(--w)) 0 currentColor,
+      calc(-20 * var(--w)) 0 currentColor,
+      calc(-30 * var(--w)) 0 currentColor,
+      calc(-31 * var(--w)) 0 currentColor,
+      calc(-41 * var(--w)) 0 currentColor,
+      calc(-51 * var(--w)) 0 currentColor,
+      calc(-61 * var(--w)) 0 currentColor,
+      calc(-71 * var(--w)) 0 currentColor,
+      calc(-81 * var(--w)) 0 currentColor;
+  }
+  20% {
+    text-shadow:
+      calc(0 * var(--w)) 0 currentColor,
+      calc(-10 * var(--w)) 0 currentColor,
+      calc(-20 * var(--w)) 0 currentColor,
+      calc(-30 * var(--w)) 0 currentColor,
+      calc(-40 * var(--w)) 0 currentColor,
+      calc(-41 * var(--w)) 0 currentColor,
+      calc(-51 * var(--w)) 0 currentColor,
+      calc(-61 * var(--w)) 0 currentColor,
+      calc(-71 * var(--w)) 0 currentColor,
+      calc(-81 * var(--w)) 0 currentColor;
+  }
+  24% {
+    text-shadow:
+      calc(0 * var(--w)) 0 currentColor,
+      calc(-10 * var(--w)) 0 currentColor,
+      calc(-20 * var(--w)) 0 currentColor,
+      calc(-30 * var(--w)) 0 currentColor,
+      calc(-40 * var(--w)) 0 currentColor,
+      calc(-50 * var(--w)) 0 currentColor,
+      calc(-51 * var(--w)) 0 currentColor,
+      calc(-61 * var(--w)) 0 currentColor,
+      calc(-71 * var(--w)) 0 currentColor,
+      calc(-81 * var(--w)) 0 currentColor;
+  }
+  28% {
+    text-shadow:
+      calc(0 * var(--w)) 0 currentColor,
+      calc(-10 * var(--w)) 0 currentColor,
+      calc(-20 * var(--w)) 0 currentColor,
+      calc(-30 * var(--w)) 0 currentColor,
+      calc(-40 * var(--w)) 0 currentColor,
+      calc(-50 * var(--w)) 0 currentColor,
+      calc(-60 * var(--w)) 0 currentColor,
+      calc(-61 * var(--w)) 0 currentColor,
+      calc(-71 * var(--w)) 0 currentColor,
+      calc(-81 * var(--w)) 0 currentColor;
+  }
+  32% {
+    text-shadow:
+      calc(0 * var(--w)) 0 currentColor,
+      calc(-10 * var(--w)) 0 currentColor,
+      calc(-20 * var(--w)) 0 currentColor,
+      calc(-30 * var(--w)) 0 currentColor,
+      calc(-40 * var(--w)) 0 currentColor,
+      calc(-50 * var(--w)) 0 currentColor,
+      calc(-60 * var(--w)) 0 currentColor,
+      calc(-70 * var(--w)) 0 currentColor,
+      calc(-71 * var(--w)) 0 currentColor,
+      calc(-81 * var(--w)) 0 currentColor;
+  }
+  36% {
+    text-shadow:
+      calc(0 * var(--w)) 0 currentColor,
+      calc(-10 * var(--w)) 0 currentColor,
+      calc(-20 * var(--w)) 0 currentColor,
+      calc(-30 * var(--w)) 0 currentColor,
+      calc(-40 * var(--w)) 0 currentColor,
+      calc(-50 * var(--w)) 0 currentColor,
+      calc(-60 * var(--w)) 0 currentColor,
+      calc(-70 * var(--w)) 0 currentColor,
+      calc(-80 * var(--w)) 0 currentColor,
+      calc(-81 * var(--w)) 0 currentColor;
+  }
+  40%,
+  60% {
+    text-shadow:
+      calc(0 * var(--w)) 0 currentColor,
+      calc(-10 * var(--w)) 0 currentColor,
+      calc(-20 * var(--w)) 0 currentColor,
+      calc(-30 * var(--w)) 0 currentColor,
+      calc(-40 * var(--w)) 0 currentColor,
+      calc(-50 * var(--w)) 0 currentColor,
+      calc(-60 * var(--w)) 0 currentColor,
+      calc(-70 * var(--w)) 0 currentColor,
+      calc(-80 * var(--w)) 0 currentColor,
+      calc(-90 * var(--w)) 0 currentColor;
+  }
+  64% {
+    text-shadow:
+      calc(-9 * var(--w)) 0 currentColor,
+      calc(-10 * var(--w)) 0 currentColor,
+      calc(-20 * var(--w)) 0 currentColor,
+      calc(-30 * var(--w)) 0 currentColor,
+      calc(-40 * var(--w)) 0 currentColor,
+      calc(-50 * var(--w)) 0 currentColor,
+      calc(-60 * var(--w)) 0 currentColor,
+      calc(-70 * var(--w)) 0 currentColor,
+      calc(-80 * var(--w)) 0 currentColor,
+      calc(-90 * var(--w)) 0 currentColor;
+  }
+  68% {
+    text-shadow:
+      calc(-9 * var(--w)) 0 currentColor,
+      calc(-19 * var(--w)) 0 currentColor,
+      calc(-20 * var(--w)) 0 currentColor,
+      calc(-30 * var(--w)) 0 currentColor,
+      calc(-40 * var(--w)) 0 currentColor,
+      calc(-50 * var(--w)) 0 currentColor,
+      calc(-60 * var(--w)) 0 currentColor,
+      calc(-70 * var(--w)) 0 currentColor,
+      calc(-80 * var(--w)) 0 currentColor,
+      calc(-90 * var(--w)) 0 currentColor;
+  }
+  72% {
+    text-shadow:
+      calc(-9 * var(--w)) 0 currentColor,
+      calc(-19 * var(--w)) 0 currentColor,
+      calc(-29 * var(--w)) 0 currentColor,
+      calc(-30 * var(--w)) 0 currentColor,
+      calc(-40 * var(--w)) 0 currentColor,
+      calc(-50 * var(--w)) 0 currentColor,
+      calc(-60 * var(--w)) 0 currentColor,
+      calc(-70 * var(--w)) 0 currentColor,
+      calc(-80 * var(--w)) 0 currentColor,
+      calc(-90 * var(--w)) 0 currentColor;
+  }
+  76% {
+    text-shadow:
+      calc(-9 * var(--w)) 0 currentColor,
+      calc(-19 * var(--w)) 0 currentColor,
+      calc(-29 * var(--w)) 0 currentColor,
+      calc(-39 * var(--w)) 0 currentColor,
+      calc(-40 * var(--w)) 0 currentColor,
+      calc(-50 * var(--w)) 0 currentColor,
+      calc(-60 * var(--w)) 0 currentColor,
+      calc(-70 * var(--w)) 0 currentColor,
+      calc(-80 * var(--w)) 0 currentColor,
+      calc(-90 * var(--w)) 0 currentColor;
+  }
+  80% {
+    text-shadow:
+      calc(-9 * var(--w)) 0 currentColor,
+      calc(-19 * var(--w)) 0 currentColor,
+      calc(-29 * var(--w)) 0 currentColor,
+      calc(-39 * var(--w)) 0 currentColor,
+      calc(-49 * var(--w)) 0 currentColor,
+      calc(-50 * var(--w)) 0 currentColor,
+      calc(-60 * var(--w)) 0 currentColor,
+      calc(-70 * var(--w)) 0 currentColor,
+      calc(-80 * var(--w)) 0 currentColor,
+      calc(-90 * var(--w)) 0 currentColor;
+  }
+  84% {
+    text-shadow:
+      calc(-9 * var(--w)) 0 currentColor,
+      calc(-19 * var(--w)) 0 currentColor,
+      calc(-29 * var(--w)) 0 currentColor,
+      calc(-39 * var(--w)) 0 currentColor,
+      calc(-49 * var(--w)) 0 currentColor,
+      calc(-59 * var(--w)) 0 currentColor,
+      calc(-60 * var(--w)) 0 currentColor,
+      calc(-70 * var(--w)) 0 currentColor,
+      calc(-80 * var(--w)) 0 currentColor,
+      calc(-90 * var(--w)) 0 currentColor;
+  }
+  88% {
+    text-shadow:
+      calc(-9 * var(--w)) 0 currentColor,
+      calc(-19 * var(--w)) 0 currentColor,
+      calc(-29 * var(--w)) 0 currentColor,
+      calc(-39 * var(--w)) 0 currentColor,
+      calc(-49 * var(--w)) 0 currentColor,
+      calc(-59 * var(--w)) 0 currentColor,
+      calc(-69 * var(--w)) 0 currentColor,
+      calc(-70 * var(--w)) 0 currentColor,
+      calc(-80 * var(--w)) 0 currentColor,
+      calc(-90 * var(--w)) 0 currentColor;
+  }
+  92% {
+    text-shadow:
+      calc(-9 * var(--w)) 0 currentColor,
+      calc(-19 * var(--w)) 0 currentColor,
+      calc(-29 * var(--w)) 0 currentColor,
+      calc(-39 * var(--w)) 0 currentColor,
+      calc(-49 * var(--w)) 0 currentColor,
+      calc(-59 * var(--w)) 0 currentColor,
+      calc(-69 * var(--w)) 0 currentColor,
+      calc(-79 * var(--w)) 0 currentColor,
+      calc(-80 * var(--w)) 0 currentColor,
+      calc(-90 * var(--w)) 0 currentColor;
+  }
+  96% {
+    text-shadow:
+      calc(-9 * var(--w)) 0 currentColor,
+      calc(-19 * var(--w)) 0 currentColor,
+      calc(-29 * var(--w)) 0 currentColor,
+      calc(-39 * var(--w)) 0 currentColor,
+      calc(-49 * var(--w)) 0 currentColor,
+      calc(-59 * var(--w)) 0 currentColor,
+      calc(-69 * var(--w)) 0 currentColor,
+      calc(-79 * var(--w)) 0 currentColor,
+      calc(-89 * var(--w)) 0 currentColor,
+      calc(-90 * var(--w)) 0 currentColor;
+  }
+  100% {
+    text-shadow:
+      calc(-9 * var(--w)) 0 currentColor,
+      calc(-19 * var(--w)) 0 currentColor,
+      calc(-29 * var(--w)) 0 currentColor,
+      calc(-39 * var(--w)) 0 currentColor,
+      calc(-49 * var(--w)) 0 currentColor,
+      calc(-59 * var(--w)) 0 currentColor,
+      calc(-69 * var(--w)) 0 currentColor,
+      calc(-79 * var(--w)) 0 currentColor,
+      calc(-89 * var(--w)) 0 currentColor,
+      calc(-99 * var(--w)) 0 currentColor;
+  }
+}

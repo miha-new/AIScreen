@@ -7,46 +7,44 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  error: {
-    type: Boolean,
-    default: false,
-  },
 })
 
-const emit = defineEmits(['update:modelValue', 'blur', 'validate'])
-const debouncedValidate = debounce((value) => emit('validate', value), 500)
+const emit = defineEmits(['update:modelValue', 'blur', 'search'])
+const debouncedSearch = debounce((value) => emit('search', value), 500)
 
 const handleInput = (e: Event) => {
   const target = e.target as HTMLInputElement
   emit('update:modelValue', target.value)
-  debouncedValidate(target.value)
+  debouncedSearch(target.value)
 }
 
-const handleValidate = (value: string) => {
-  debouncedValidate.cancel()
-  emit('validate', value)
+const handleSearch = () => {
+  debouncedSearch.cancel()
+  emit('search')
 }
 
 const handleBlur = (e: Event) => {
   const target = e.target as HTMLInputElement
   emit('blur', target.value)
-  handleValidate(target.value)
+  handleSearch()
 }
 
 watch(
   () => props.modelValue,
   (newValue: string) => {
-    debouncedValidate(newValue)
+    debouncedSearch(newValue)
   },
 )
 </script>
 
 <template>
+  <!-- Поле ввода -->
   <input
     :value="modelValue"
     @input="handleInput"
     @blur="handleBlur"
-    class="input"
-    :class="{ 'border-red-500': props.error }"
+    type="search"
+    placeholder="Search..."
+    class="search"
   />
 </template>

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useApi } from '@/composables/useApi'
-import type { LoginData } from '@/api/types'
+import { type LoginParams } from '@/api/types'
 import { useValidate } from '@/composables/useValidate'
 import BaseLabel from '@/components/BaseLabel.vue'
 import BaseInput from '@/components/BaseInput.vue'
@@ -19,7 +19,7 @@ const emailRules = [rules.required, rules.email]
 const passwordRules = [rules.required, rules.minLength(6)]
 
 const authErrorMessage = ref<string>('')
-const formData = ref<LoginData>({
+const formData = ref<LoginParams>({
   email: '',
   password: '',
   remember_me: 0,
@@ -71,59 +71,52 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <div class="flex flex-wrap items-center justify-center min-h-full p-4">
-    <div class="card w-full max-w-[480px] p-4">
-      <h2 class="h1 text-center mb-4">Sign In to Manager</h2>
-      <form @submit.prevent="handleSubmit">
-        <fieldset class="space-y-5" :disabled="authLoading">
-          <div class="relative">
-            <BaseLabel htmlFor="email" text="Email" />
-            <BaseInput
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Enter email"
-              v-model="formData.email"
-              :error="!!errors.email"
-              @validate="handleValidateEmail"
-            />
-            <ErrorMessage :show="!!errors.email" :message="errors.email" />
-          </div>
-          <div class="relative">
-            <BaseLabel htmlFor="password" text="Password" />
-            <BaseInput
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Enter password"
-              v-model="formData.password"
-              :error="!!errors.password"
-              @validate="handleValidatePassword"
-            />
-            <ErrorMessage :show="!!errors.password" :message="errors.password" />
-          </div>
-          <BaseSwitch
-            :modelValue="!!formData.remember_me"
-            @update:modelValue="handleRemember"
-            label="Remember me"
+  <div class="card w-full max-w-[480px] p-4">
+    <h2 class="h1 text-center mb-4">Sign In to Manager</h2>
+    <form @submit.prevent="handleSubmit">
+      <fieldset class="space-y-5" :disabled="authLoading">
+        <div class="relative">
+          <BaseLabel htmlFor="email" text="Email" />
+          <BaseInput
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Enter email"
+            v-model="formData.email"
+            :error="!!errors.email"
+            @validate="handleValidateEmail"
           />
-          <div class="relative">
-            <BaseButton
-              class="btn-primary"
-              type="submit"
-              :disabled="!isValid"
-              :loading="authLoading"
-            >
-              Sign in
-            </BaseButton>
-            <ErrorMessage
-              :show="!!authErrorMessage"
-              :message="authErrorMessage"
-              class="text-center"
-            />
-          </div>
-        </fieldset>
-      </form>
-    </div>
+          <ErrorMessage :show="!!errors.email" :message="errors.email" />
+        </div>
+        <div class="relative">
+          <BaseLabel htmlFor="password" text="Password" />
+          <BaseInput
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter password"
+            v-model="formData.password"
+            :error="!!errors.password"
+            @validate="handleValidatePassword"
+          />
+          <ErrorMessage :show="!!errors.password" :message="errors.password" />
+        </div>
+        <BaseSwitch
+          :modelValue="!!formData.remember_me"
+          @update:modelValue="handleRemember"
+          label="Remember me"
+        />
+        <div class="relative">
+          <BaseButton class="btn-primary" type="submit" :disabled="!isValid" :loading="authLoading">
+            Sign in
+          </BaseButton>
+          <ErrorMessage
+            :show="!!authErrorMessage"
+            :message="authErrorMessage"
+            class="text-center"
+          />
+        </div>
+      </fieldset>
+    </form>
   </div>
 </template>
