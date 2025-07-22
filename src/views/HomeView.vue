@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useApi } from '@/composables/useApi'
-import type { TemplatesTag, Template, TemplatesParams } from '@/api/types'
+import type { TemplatesTag, Template, TemplatesParams, CreateTemplateParams } from '@/api/types'
 import BaseButton from '@/components/BaseButton.vue'
 import BaseSidebar from '@/components/BaseSidebar.vue'
 import FormTemplate from '@/components/FormTemplate.vue'
@@ -11,11 +11,13 @@ import CardTemplate from '@/components/CardTemplate.vue'
 
 const templateList = ref<Template[]>([])
 const templateTagsList = ref<TemplatesTag[]>([])
+const { loading: createTemplateLoading, error: createTemplateError, createTemplate } = useApi()
 const { loading: isTemplatesLoading, error: templatesError, templates } = useApi()
 const { error: templatesTagsError, templatesTags } = useApi()
 const { error: deleteTemplateError, deleteTemplate } = useApi()
 
 const isPanelOpen = ref(false)
+const createErrorMessage = ref<string>('')
 const search = ref('')
 const activeTemplatesTags = ref<TemplatesTag[]>([])
 const templatesParams = computed<TemplatesParams>(() => {
@@ -63,6 +65,34 @@ const handleDeleteTemplate = async (id: number) => {
 
   if (response && !deleteTemplateError.value) {
     console.log('delete success')
+  }
+}
+
+const handleCreateTemplate = async (params: CreateTemplateParams, clearForm: () => void) => {
+  createErrorMessage.value = ''
+
+  const response = await createTemplate(params)
+
+  if (response && !createTemplateError.value) {
+    clearForm()
+  } else {
+    createErrorMessage.value = 'Create template failed. Please try again'
+
+    if (createTemplateError.value?.response) {
+      const { status } = createTemplateError.value.response
+      if (status === 422) {
+        createErrorMessage.value = 'Invalid data in the form. Please try again.'
+        console.log('error', 422)
+      } else if (status === 503) {
+        createErrorMessage.value = 'Server unavailable. Please try again later.'
+        console.log('error', 503)
+      }
+    } else if (createTemplateError.value?.request) {
+      console.log('other error')
+      createErrorMessage.value = 'Network error. Please check your connection.'
+    }
+
+    console.error('Create template error:', createTemplateError.value)
   }
 }
 
@@ -118,6 +148,11 @@ onMounted(() => {
   </template>
 
   <BaseSidebar :isOpen="isPanelOpen" title="Create Template" @close="isPanelOpen = false">
-    <FormTemplate :tags="templateTagsList" />
+    <FormTemplate
+      :tags="templateTagsList"
+      :error="createErrorMessage"
+      :loading="createTemplateLoading"
+      @submit="handleCreateTemplate"
+    />
   </BaseSidebar>
 </template>

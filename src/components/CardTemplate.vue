@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import BaseButton from './BaseButton.vue'
+import BaseConfirm from '@/components/ModalConfirm.vue'
 
 const props = defineProps({
   template: {
@@ -11,6 +13,11 @@ const props = defineProps({
 
 const emit = defineEmits(['delete'])
 const router = useRouter()
+const confirmDialog = ref<InstanceType<typeof BaseConfirm> | null>(null)
+
+const handleConfirm = (): void => {
+  confirmDialog.value?.openModal()
+}
 
 const handleSeeMore = () => {
   router.push({
@@ -34,8 +41,15 @@ const handleDelete = () => {
       </div>
     </div>
     <div class="flex items-center gap-3 px-4 pb-4">
-      <BaseButton class="btn-danger" @click="handleDelete">Delete</BaseButton>
+      <BaseButton class="btn-danger" @click="handleConfirm">Delete</BaseButton>
       <BaseButton class="btn-primary" @click="handleSeeMore">See more</BaseButton>
     </div>
+    <BaseConfirm
+      ref="confirmDialog"
+      title="Delete Confirmation"
+      message="Are you sure you want to delete this template? This action cannot be undone."
+      confirm-text="Delete"
+      @confirm="handleDelete"
+    />
   </div>
 </template>

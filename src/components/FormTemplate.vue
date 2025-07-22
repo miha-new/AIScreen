@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
-import { useApi } from '@/composables/useApi'
+import { reactive } from 'vue'
 import { type CreateTemplateParams } from '@/api/types'
 import { useValidate } from '@/composables/useValidate'
 import BaseLabel from '@/components/BaseLabel.vue'
@@ -15,12 +14,19 @@ defineProps({
     type: Array as () => string[],
     default: () => [],
   },
+  errorMessage: {
+    type: String,
+    default: '',
+  },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
 })
 
-const { loading: createTemplateLoading, error: createTemplateError, createTemplate } = useApi()
-const { errors, rules, validateField, validateForm, isValid } = useValidate()
+const emit = defineEmits(['submit'])
 
-const createErrorMessage = ref<string>('')
+const { errors, rules, validateField, validateForm, isValid, clearErrors } = useValidate()
 
 const formData = reactive<CreateTemplateParams>({
   name: '',
@@ -30,32 +36,13 @@ const formData = reactive<CreateTemplateParams>({
   preview_image: undefined,
 })
 
-const handleCreateTemplate = async () => {
-  createErrorMessage.value = ''
-
-  const response = await createTemplate(formData)
-
-  if (response && !createTemplateError.value) {
-    console.log('success')
-  } else {
-    createErrorMessage.value = 'Create template failed. Please try again'
-
-    if (createTemplateError.value?.response) {
-      const { status } = createTemplateError.value.response
-      if (status === 422) {
-        createErrorMessage.value = 'Invalid data in the form. Please try again.'
-        console.log('error', 422)
-      } else if (status === 503) {
-        createErrorMessage.value = 'Server unavailable. Please try again later.'
-        console.log('error', 503)
-      }
-    } else if (createTemplateError.value?.request) {
-      console.log('other error')
-      createErrorMessage.value = 'Network error. Please check your connection.'
-    }
-
-    console.error('Create template error:', createTemplateError.value)
-  }
+const handleClear = () => {
+  formData.name = ''
+  formData.width = ''
+  formData.height = ''
+  formData.tags = []
+  formData.preview_image = undefined
+  clearErrors()
 }
 
 const handleSubmit = () => {
@@ -66,13 +53,13 @@ const handleSubmit = () => {
     tags: { value: formData.tags, rules: [rules.requiredTags] },
   })
 
-  if (isValid) handleCreateTemplate()
+  if (isValid) emit('submit', formData, handleClear)
 }
 </script>
 
 <template>
   <form @submit.prevent="handleSubmit">
-    <fieldset class="space-y-5" :disabled="createTemplateLoading">
+    <fieldset class="space-y-5" :disabled="loading">
       <div class="relative">
         <BaseLabel htmlFor="name" text="Name" />
         <BaseInput
@@ -147,13 +134,10 @@ const handleSubmit = () => {
         <FileInput v-model="formData.preview_image" />
       </div>
       <div class="relative">
-        <BaseButton
-          class="btn-primary"
-          type="submit"
-          :disabled="!isValid"
-          :loading="createTemplateLoading"
-          >Create</BaseButton
-        >
+        <BaseButton class="btn-primary" type="submit" :disabled="!isValid" :loading="loading">
+          Create
+        </BaseButton>
+        <ErrorMessage :show="!!errorMessage" :message="errorMessage" class="text-center" />
       </div>
     </fieldset>
   </form>

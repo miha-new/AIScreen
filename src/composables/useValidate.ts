@@ -12,6 +12,12 @@ interface ValidationRules {
 
 export function useValidate() {
   const errors = ref<ValidationErrors>({})
+  const skipRequiredOnEmpty = ref(false)
+
+  const clearErrors = (skipRequired = true) => {
+    errors.value = {}
+    skipRequiredOnEmpty.value = skipRequired
+  }
 
   const rules: ValidationRules = {
     required: <T>(value: T) => !!value || 'Please fill in this field',
@@ -25,6 +31,17 @@ export function useValidate() {
   }
 
   const validateField = <T>(field: string, value: T, fieldRules: ValidationRule<T>[]) => {
+    const isEmpty =
+      value === null ||
+      value === undefined ||
+      (typeof value === 'string' && value.trim() === '') ||
+      (Array.isArray(value) && value.length === 0)
+
+    if (isEmpty && skipRequiredOnEmpty.value) {
+      delete errors.value[field]
+      return true
+    }
+
     for (const rule of fieldRules) {
       const result = rule(value)
       if (typeof result === 'string') {
@@ -32,6 +49,7 @@ export function useValidate() {
         return false
       }
     }
+
     delete errors.value[field]
     return true
   }
@@ -64,5 +82,6 @@ export function useValidate() {
     validateField,
     validateForm,
     isValid,
+    clearErrors,
   }
 }
