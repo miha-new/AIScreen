@@ -1,22 +1,30 @@
 import { ref, computed } from 'vue'
 
-type ValidationRule = (value: string) => string | boolean
+type ValidationRule<T = unknown> = (value: T) => string | boolean
 type ValidationErrors = Record<string, string>
+
+interface ValidationRules {
+  required: <T>(value: T) => string | boolean
+  email: (value: string) => string | boolean
+  minLength: (length: number) => (value: string) => string | boolean
+  requiredTags: (value: string[]) => string | boolean
+}
 
 export function useValidate() {
   const errors = ref<ValidationErrors>({})
 
-  const rules = {
-    required: (value: string) => !!value || 'Please fill in this field',
+  const rules: ValidationRules = {
+    required: <T>(value: T) => !!value || 'Please fill in this field',
     email: (value: string) => {
       const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       return pattern.test(value) || 'Please enter a valid email address'
     },
     minLength: (length: number) => (value: string) =>
-      value.length >= length || `Password must be at least ${length} characters`,
+      value.length >= length || `Must be at least ${length} characters`,
+    requiredTags: (value: string[]) => value.length > 0 || 'Please include some tags',
   }
 
-  const validateField = (field: string, value: string, fieldRules: ValidationRule[]) => {
+  const validateField = <T>(field: string, value: T, fieldRules: ValidationRule<T>[]) => {
     for (const rule of fieldRules) {
       const result = rule(value)
       if (typeof result === 'string') {
@@ -28,7 +36,17 @@ export function useValidate() {
     return true
   }
 
-  const validateForm = (fields: Record<string, { value: string; rules: ValidationRule[] }>) => {
+  type FormField<T = unknown> = {
+    value: T
+    rules: ValidationRule<T>[]
+  }
+
+  type FormFields = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: FormField<any>
+  }
+
+  const validateForm = (fields: FormFields) => {
     let isValid = true
     Object.entries(fields).forEach(([field, { value, rules }]) => {
       if (!validateField(field, value, rules)) {

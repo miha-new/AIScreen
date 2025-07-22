@@ -48,9 +48,8 @@ export interface Template {
 
 export interface CreateTemplateParams {
   name: string
-  objects: null
-  tags?: string[] | null
-  width?: string
-  height?: string
-  preview_image?: string
+  width: string
+  height: string
+  tags: string[]
+  preview_image?: File
 }

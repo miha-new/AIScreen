@@ -2,6 +2,10 @@
 import { computed } from 'vue'
 
 const props = defineProps({
+  as: {
+    type: String,
+    default: 'div',
+  },
   clickable: {
     type: Boolean,
     default: false,
@@ -20,7 +24,7 @@ const mergedClasses = computed(() => ({
 </script>
 
 <template>
-  <div :class="mergedClasses" tabindex="0">
+  <component :is="as" :class="mergedClasses">
     <slot />
-  </div>
+  </component>
 </template>

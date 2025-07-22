@@ -13,6 +13,7 @@ const templateList = ref<Template[]>([])
 const templateTagsList = ref<TemplatesTag[]>([])
 const { loading: isTemplatesLoading, error: templatesError, templates } = useApi()
 const { error: templatesTagsError, templatesTags } = useApi()
+const { error: deleteTemplateError, deleteTemplate } = useApi()
 
 const isPanelOpen = ref(false)
 const search = ref('')
@@ -57,8 +58,12 @@ const handleTemplates = async (params?: TemplatesParams) => {
   }
 }
 
-const handleDeleteTemplate = async () => {
-  alert('Delete Template')
+const handleDeleteTemplate = async (id: number) => {
+  const response = await deleteTemplate({ id })
+
+  if (response && !deleteTemplateError.value) {
+    console.log('delete success')
+  }
 }
 
 onMounted(() => {
@@ -83,6 +88,7 @@ onMounted(() => {
         v-for="(templateTagItem, index) in templateTagsList"
         :key="index"
         class="tag-primary"
+        as="button"
         :clickable="true"
         :active="isActiveTemplatesTags(templateTagItem)"
         @keyup.enter="handleActiveTemplatesTags(templateTagItem)"
@@ -112,6 +118,6 @@ onMounted(() => {
   </template>
 
   <BaseSidebar :isOpen="isPanelOpen" title="Create Template" @close="isPanelOpen = false">
-    <FormTemplate />
+    <FormTemplate :tags="templateTagsList" />
   </BaseSidebar>
 </template>

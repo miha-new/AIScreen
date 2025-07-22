@@ -69,8 +69,20 @@ class ApiService {
   public async templatesTags(): Promise<TemplatesTag[]> {
     return this.authApi.get('/canvas_templates/tags/list')
   }
-  public async createTemplate(params: CreateTemplateParams): Promise<Template> {
-    return this.authApi.post('/canvas_template', params)
+  public async createTemplate(params: CreateTemplateParams): Promise<void> {
+    const headers = { 'Content-Type': 'multipart/form-data' }
+    const formData = new FormData()
+    formData.append('name', params.name)
+    formData.append('width', params.width)
+    formData.append('height', params.height)
+    params.tags.forEach((tag) => {
+      formData.append('tags[]', tag)
+    })
+    formData.append('preview_image', params.preview_image as Blob)
+    return this.authApi.post('/canvas_templates', formData, { headers })
+  }
+  public async deleteTemplate(params: TemplateParams): Promise<void> {
+    return this.authApi.delete('/canvas_templates', { params })
   }
 }
 

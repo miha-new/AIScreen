@@ -2,10 +2,10 @@ import { ref } from 'vue'
 import { apiService } from '@/api'
 import type { AxiosError } from 'axios'
 import type {
+  CreateTemplateParams,
   LoginParams,
   TemplateParams,
   TemplatesParams,
-  CreateTemplateParams,
 } from '@/api/types'
 
 export function useApi() {
@@ -35,5 +35,6 @@ export function useApi() {
     templatesTags: () => execute(() => apiService.templatesTags()),
     createTemplate: (params: CreateTemplateParams) =>
       execute(() => apiService.createTemplate(params)),
+    deleteTemplate: (params: TemplateParams) => execute(() => apiService.deleteTemplate(params)),
   }
 }

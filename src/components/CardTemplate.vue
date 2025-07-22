@@ -19,7 +19,7 @@ const handleSeeMore = () => {
   })
 }
 const handleDelete = () => {
-  emit('delete')
+  emit('delete', props.template.id)
 }
 </script>
 

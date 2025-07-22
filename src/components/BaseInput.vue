@@ -4,7 +4,7 @@ import { debounce } from 'lodash-es'
 
 const props = defineProps({
   modelValue: {
-    type: String,
+    type: [String, Number],
     default: '',
   },
   error: {
@@ -35,7 +35,7 @@ const handleBlur = (e: Event) => {
 
 watch(
   () => props.modelValue,
-  (newValue: string) => {
+  (newValue) => {
     debouncedValidate(newValue)
   },
 )
