@@ -6,6 +6,7 @@ import type {
   LoginParams,
   TemplateParams,
   TemplatesParams,
+  UpdateTemplateParams,
 } from '@/api/types'
 
 export function useApi() {
@@ -30,11 +31,13 @@ export function useApi() {
 
     login: (params: LoginParams) => execute(() => apiService.login(params)),
 
-    templates: (params?: TemplatesParams) => execute(() => apiService.templates(params)),
-    template: (params: TemplateParams) => execute(() => apiService.template(params)),
-    templatesTags: () => execute(() => apiService.templatesTags()),
+    getTemplates: (params?: TemplatesParams) => execute(() => apiService.getTemplates(params)),
+    getTemplate: (params: TemplateParams) => execute(() => apiService.getTemplate(params)),
+    getTemplateTags: () => execute(() => apiService.getTemplateTags()),
     createTemplate: (params: CreateTemplateParams) =>
       execute(() => apiService.createTemplate(params)),
+    updateTemplate: (params: UpdateTemplateParams) =>
+      execute(() => apiService.updateTemplate(params)),
     deleteTemplate: (params: TemplateParams) => execute(() => apiService.deleteTemplate(params)),
   }
 }

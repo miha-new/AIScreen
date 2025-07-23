@@ -7,11 +7,12 @@ import axios, {
 import type {
   LoginParams,
   AuthResponse,
-  TemplatesTag,
+  TemplateTag,
   TemplatesParams,
   TemplateParams,
   Template,
   CreateTemplateParams,
+  UpdateTemplateParams,
 } from './types'
 
 class ApiService {
@@ -60,13 +61,13 @@ class ApiService {
     return this.publicApi.post('/login', params)
   }
 
-  public async templates(params?: TemplatesParams): Promise<Template[]> {
+  public async getTemplates(params?: TemplatesParams): Promise<Template[]> {
     return this.authApi.get('/canvas_templates', { params })
   }
-  public async template(params: TemplateParams): Promise<Template> {
+  public async getTemplate(params: TemplateParams): Promise<Template> {
     return this.authApi.get(`/canvas_templates/${params.id}`)
   }
-  public async templatesTags(): Promise<TemplatesTag[]> {
+  public async getTemplateTags(): Promise<TemplateTag[]> {
     return this.authApi.get('/canvas_templates/tags/list')
   }
   public async createTemplate(params: CreateTemplateParams): Promise<void> {
@@ -75,11 +76,36 @@ class ApiService {
     formData.append('name', params.name)
     formData.append('width', params.width)
     formData.append('height', params.height)
+
     params.tags.forEach((tag) => {
       formData.append('tags[]', tag)
     })
-    formData.append('preview_image', params.preview_image as Blob)
+
+    if (params.preview_image instanceof File) {
+      const file = new Blob([params.preview_image], { type: 'text/plain' })
+      formData.append('preview_image', file)
+    }
+
     return this.authApi.post('/canvas_templates', formData, { headers })
+  }
+  public async updateTemplate(params: UpdateTemplateParams): Promise<void> {
+    const headers = { 'Content-Type': 'multipart/form-data' }
+
+    const formData = new FormData()
+    formData.append('name', params.name)
+    formData.append('width', params.width)
+    formData.append('height', params.height)
+
+    params.tags.forEach((tag) => {
+      formData.append('tags[]', tag)
+    })
+
+    if (params.preview_image) {
+      const file = new Blob([params.preview_image], { type: 'text/plain' })
+      formData.append('preview_image', file)
+    }
+
+    return this.authApi.post(`/canvas_templates/${params.id}?_method=PATCH`, formData, { headers })
   }
   public async deleteTemplate(params: TemplateParams): Promise<void> {
     return this.authApi.delete('/canvas_templates', { params })

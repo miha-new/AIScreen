@@ -4,8 +4,11 @@ import { XMarkIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps({
   modelValue: {
-    type: File,
+    type: [File, String],
     default: null,
+    validator: (value: unknown) => {
+      return value === null || value instanceof File || typeof value === 'string'
+    },
   },
 })
 
@@ -55,14 +58,17 @@ const openFileDialog = () => {
 
 watch(
   () => props.modelValue,
-  (file) => {
-    if (previewUrl.value) {
+  (value) => {
+    // Cleanup previous URL if it was an object URL
+    if (previewUrl.value && typeof props.modelValue === 'object') {
       URL.revokeObjectURL(previewUrl.value)
-      previewUrl.value = null
     }
+    previewUrl.value = null
 
-    if (file) {
-      previewUrl.value = URL.createObjectURL(file)
+    if (value instanceof File) {
+      previewUrl.value = URL.createObjectURL(value)
+    } else if (typeof value === 'string') {
+      previewUrl.value = value
     }
   },
   { immediate: true },

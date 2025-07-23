@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useTemplateStore } from '@/stores/templates'
 import { useApi } from '@/composables/useApi'
-import type { TemplatesTag, Template, TemplatesParams, CreateTemplateParams } from '@/api/types'
+import type { TemplateTag, TemplatesParams, CreateTemplateParams } from '@/api/types'
 import BaseButton from '@/components/BaseButton.vue'
 import BaseSidebar from '@/components/BaseSidebar.vue'
 import FormTemplate from '@/components/FormTemplate.vue'
@@ -9,30 +11,42 @@ import BaseSearch from '@/components/BaseSearch.vue'
 import BaseTag from '@/components/BaseTag.vue'
 import CardTemplate from '@/components/CardTemplate.vue'
 
-const templateList = ref<Template[]>([])
-const templateTagsList = ref<TemplatesTag[]>([])
+const store = useTemplateStore()
+
+const { templateTags, templates, hasTemplateTags, hasTemplates } = storeToRefs(store)
+
+const { setTemplateTags, setTemplates, addTemplate, removeTemplateById } = store
+
 const { loading: createTemplateLoading, error: createTemplateError, createTemplate } = useApi()
-const { loading: isTemplatesLoading, error: templatesError, templates } = useApi()
-const { error: templatesTagsError, templatesTags } = useApi()
+const { getTemplates, loading: templatesLoading, error: templatesError } = useApi()
+const { getTemplateTags, error: templatesTagsError } = useApi()
 const { error: deleteTemplateError, deleteTemplate } = useApi()
 
 const isPanelOpen = ref(false)
 const createErrorMessage = ref<string>('')
 const search = ref('')
-const activeTemplatesTags = ref<TemplatesTag[]>([])
+const activeTemplatesTags = ref<TemplateTag[]>([])
 const templatesParams = computed<TemplatesParams>(() => {
   return { filter: { name: search.value, tags: activeTemplatesTags.value } }
 })
+
+const handleTemplates = async (params?: TemplatesParams) => {
+  const response = await getTemplates(params)
+
+  if (response && !templatesError.value) {
+    setTemplates(response)
+  }
+}
 
 const handleSearch = () => {
   handleTemplates(templatesParams.value)
 }
 
-const isActiveTemplatesTags = (value: TemplatesTag) => {
+const isActiveTemplatesTags = (value: TemplateTag) => {
   return activeTemplatesTags.value.indexOf(value) !== -1
 }
 
-const handleActiveTemplatesTags = (value: TemplatesTag) => {
+const handleActiveTemplatesTags = (value: TemplateTag) => {
   const index: number = activeTemplatesTags.value.indexOf(value)
 
   if (index === -1) {
@@ -44,27 +58,19 @@ const handleActiveTemplatesTags = (value: TemplatesTag) => {
   handleTemplates(templatesParams.value)
 }
 
-const handleTemplatesTags = async () => {
-  const response = await templatesTags()
+const handleTemplateTags = async () => {
+  const response = await getTemplateTags()
 
   if (response && !templatesTagsError.value) {
-    templateTagsList.value = response
-  }
-}
-
-const handleTemplates = async (params?: TemplatesParams) => {
-  const response = await templates(params)
-
-  if (response && !templatesError.value) {
-    templateList.value = response
+    setTemplateTags(response)
   }
 }
 
 const handleDeleteTemplate = async (id: number) => {
-  const response = await deleteTemplate({ id })
+  await deleteTemplate({ id })
 
-  if (response && !deleteTemplateError.value) {
-    console.log('delete success')
+  if (!deleteTemplateError.value) {
+    removeTemplateById(id)
   }
 }
 
@@ -75,6 +81,7 @@ const handleCreateTemplate = async (params: CreateTemplateParams, clearForm: () 
 
   if (response && !createTemplateError.value) {
     clearForm()
+    addTemplate(response)
   } else {
     createErrorMessage.value = 'Create template failed. Please try again'
 
@@ -97,7 +104,7 @@ const handleCreateTemplate = async (params: CreateTemplateParams, clearForm: () 
 }
 
 onMounted(() => {
-  handleTemplatesTags()
+  handleTemplateTags()
   handleTemplates()
 })
 </script>
@@ -113,9 +120,9 @@ onMounted(() => {
   </div>
   <div class="mb-4">
     <BaseSearch class="mb-3" v-model="search" @search="handleSearch" />
-    <div v-if="templateTagsList.length" class="flex gap-1">
+    <div v-if="hasTemplateTags" class="flex gap-1">
       <BaseTag
-        v-for="(templateTagItem, index) in templateTagsList"
+        v-for="(templateTagItem, index) in templateTags"
         :key="index"
         class="tag-primary"
         as="button"
@@ -129,27 +136,31 @@ onMounted(() => {
     </div>
   </div>
 
-  <div v-if="isTemplatesLoading" class="text-lg font-bold py-10">
+  <div
+    v-if="hasTemplates"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4"
+  >
+    <CardTemplate
+      v-for="templateItem in templates"
+      :key="templateItem.id"
+      :template="templateItem"
+      @delete="handleDeleteTemplate"
+    />
+  </div>
+  <div v-else-if="templatesLoading" class="text-lg font-bold py-10">
     <div class="loader mx-auto" />
   </div>
-  <template v-else>
-    <div
-      v-if="templateList.length"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4"
-    >
-      <CardTemplate
-        v-for="templateItem in templateList"
-        :key="templateItem.id"
-        :template="templateItem"
-        @delete="handleDeleteTemplate"
-      />
-    </div>
-    <div v-else class="text-lg font-bold text-center py-10">No Templates Available</div>
-  </template>
+  <div v-else class="text-lg font-bold text-center py-10">No Templates Available</div>
 
   <BaseSidebar :isOpen="isPanelOpen" title="Create Template" @close="isPanelOpen = false">
+    <!-- <FormTemplate
+      :tags="templateTags"
+      :error="createErrorMessage"
+      :loading="createTemplateLoading"
+      @submit="handleCreateTemplate"
+    /> -->
     <FormTemplate
-      :tags="templateTagsList"
+      :tags="templateTags"
       :error="createErrorMessage"
       :loading="createTemplateLoading"
       @submit="handleCreateTemplate"

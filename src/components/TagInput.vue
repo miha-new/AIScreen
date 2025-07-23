@@ -98,6 +98,7 @@ const addTag = (newTag: string) => {
   }
 
   query.value = ''
+  handleValidate()
 }
 
 const removeTag = (tagToRemove: string) => {
@@ -128,8 +129,6 @@ const handleComboboxSelect = (tag: string | null) => {
   } else {
     addTag(tag)
   }
-
-  handleValidate()
 }
 
 const handleToggleOpen = () => {

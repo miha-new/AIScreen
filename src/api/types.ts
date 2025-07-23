@@ -16,11 +16,11 @@ export interface AuthUser {
   on_trial: boolean
 }
 
-export type TemplatesTag = string
+export type TemplateTag = string
 
 export interface TemplatesFilterParams {
   name?: string
-  tags?: TemplatesTag[]
+  tags?: TemplateTag[]
 }
 
 export interface TemplatesParams {
@@ -31,25 +31,20 @@ export interface TemplateParams {
   id: number
 }
 
-export interface Template {
-  id: number
-  name: string
-  width?: string
-  height?: string
-  preview_image?: string
-  type?: string
-  objects?: string[] | null
-  tags?: string[] | null
-  created_at: string
-  created_by: string
-  updated_at: string
-  updated_by: string
-}
-
-export interface CreateTemplateParams {
+export interface CreateTemplateParams<T = File> {
   name: string
   width: string
   height: string
   tags: string[]
-  preview_image?: File
+  preview_image?: T
+}
+
+export interface UpdateTemplateParams extends TemplateParams, CreateTemplateParams<File> {}
+
+export interface Template extends TemplateParams, CreateTemplateParams<string> {
+  [key: string]: unknown
+}
+
+export interface TemplateDraft extends CreateTemplateParams<string | File> {
+  id?: number
 }

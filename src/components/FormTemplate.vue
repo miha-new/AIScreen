@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { type CreateTemplateParams } from '@/api/types'
+import { reactive, watch } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useTemplateStore } from '@/stores/templates'
+import type { Template, TemplateDraft } from '@/api/types'
 import { useValidate } from '@/composables/useValidate'
 import BaseLabel from '@/components/BaseLabel.vue'
 import BaseInput from '@/components/BaseInput.vue'
@@ -9,7 +11,11 @@ import BaseButton from '@/components/BaseButton.vue'
 import FileInput from '@/components/FileInput.vue'
 import TagInput from '@/components/TagInput.vue'
 
-defineProps({
+const props = defineProps({
+  modelValue: {
+    type: Object as () => Template,
+    default: () => {},
+  },
   tags: {
     type: Array as () => string[],
     default: () => [],
@@ -24,19 +30,31 @@ defineProps({
   },
 })
 
+const store = useTemplateStore()
+
+const { templateDraft } = storeToRefs(store)
+const { setTemplateDraft } = store
+
 const emit = defineEmits(['submit'])
 
 const { errors, rules, validateField, validateForm, isValid, clearErrors } = useValidate()
 
-const formData = reactive<CreateTemplateParams>({
-  name: '',
-  width: '',
-  height: '',
-  tags: [],
-  preview_image: undefined,
+const templateDraftId = templateDraft.value?.id
+const modelValueId = props.modelValue?.id
+const isSameIds = templateDraftId === modelValueId
+const data = isSameIds ? templateDraft.value : props.modelValue
+
+const formData = reactive<TemplateDraft>({
+  id: data?.id,
+  name: data?.name || '',
+  width: data?.width?.replace('px', '') || '',
+  height: data?.height?.replace('px', '') || '',
+  tags: data?.tags || [],
+  preview_image: data?.preview_image || undefined,
 })
 
 const handleClear = () => {
+  formData.id = undefined
   formData.name = ''
   formData.width = ''
   formData.height = ''
@@ -53,8 +71,24 @@ const handleSubmit = () => {
     tags: { value: formData.tags, rules: [rules.requiredTags] },
   })
 
-  if (isValid) emit('submit', formData, handleClear)
+  if (isValid) {
+    const params = {
+      ...formData,
+      width: `${formData.width}px`,
+      height: `${formData.height}px`,
+    }
+
+    emit('submit', params, handleClear)
+  }
 }
+
+watch(
+  () => formData,
+  (newData) => {
+    setTemplateDraft(newData)
+  },
+  { deep: true },
+)
 </script>
 
 <template>
@@ -135,7 +169,7 @@ const handleSubmit = () => {
       </div>
       <div class="relative">
         <BaseButton class="btn-primary" type="submit" :disabled="!isValid" :loading="loading">
-          Create
+          {{ modelValue?.id ? 'Save' : 'Create' }}
         </BaseButton>
         <ErrorMessage :show="!!errorMessage" :message="errorMessage" class="text-center" />
       </div>
