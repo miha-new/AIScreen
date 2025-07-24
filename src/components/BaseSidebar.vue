@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { watch } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionRoot, TransitionChild } from '@headlessui/vue'
 
-defineProps({
+const props = defineProps({
   isOpen: {
     type: Boolean,
     required: true,
@@ -22,11 +23,22 @@ const emit = defineEmits(['close'])
 function closeModal() {
   emit('close')
 }
+
+watch(
+  () => props.isOpen,
+  (newVal) => {
+    if (newVal) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+  },
+)
 </script>
 
 <template>
   <TransitionRoot appear :show="isOpen" as="template">
-    <Dialog as="div" class="relative z-50" @close="closeModal">
+    <Dialog :static="true" as="div" class="relative z-50" @close="closeModal">
       <TransitionChild
         as="template"
         enter="ease-in-out duration-300"

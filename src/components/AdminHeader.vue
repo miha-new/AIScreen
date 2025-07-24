@@ -11,7 +11,7 @@ const handleLogout = async () => {
 
 <template>
   <header
-    class="fixed top-0 left-0 w-full bg-black/40 backdrop-blur-xs border-b border-gray-800 z-50"
+    class="sticky top-0 left-0 w-full bg-black/40 backdrop-blur-xs border-b border-gray-800 z-50"
   >
     <div class="container h-[50px] mx-auto py-3 px-4 flex items-center justify-between">
       <RouterLink

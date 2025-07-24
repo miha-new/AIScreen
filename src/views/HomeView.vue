@@ -120,7 +120,7 @@ onMounted(() => {
   </div>
   <div class="mb-4">
     <BaseSearch class="mb-3" v-model="search" @search="handleSearch" />
-    <div v-if="hasTemplateTags" class="flex gap-1">
+    <div v-if="hasTemplateTags" class="flex flex-wrap gap-1">
       <BaseTag
         v-for="(templateTagItem, index) in templateTags"
         :key="index"
